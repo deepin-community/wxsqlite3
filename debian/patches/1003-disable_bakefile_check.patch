@@ -1,0 +1,23 @@
+Description: Skip comparison of Bakefile versions.
+Author: Alessio Treglia <alessio@debian.org>
+---
+ configure |    8 --------
+ 1 file changed, 8 deletions(-)
+
+--- wxsqlite3.orig/configure
++++ wxsqlite3/configure
+@@ -7790,14 +7790,6 @@ BAKEFILE_AUTOCONF_INC_M4_VERSION="0.2.9"
+ 
+ 
+ 
+-    if test "$BAKEFILE_AUTOCONF_INC_M4_VERSION" = "" ; then
+-        as_fn_error $? "No version found in autoconf_inc.m4 - bakefile macro was changed to take additional argument, perhaps configure.in wasn't updated (see the documentation)?" "$LINENO" 5
+-    fi
+-
+-    if test "$BAKEFILE_BAKEFILE_M4_VERSION" != "$BAKEFILE_AUTOCONF_INC_M4_VERSION" ; then
+-        as_fn_error $? "Versions of Bakefile used to generate makefiles ($BAKEFILE_AUTOCONF_INC_M4_VERSION) and configure ($BAKEFILE_BAKEFILE_M4_VERSION) do not match." "$LINENO" 5
+-    fi
+-
+             ac_config_files="$ac_config_files Makefile"
+ 
+             cat >confcache <<\_ACEOF

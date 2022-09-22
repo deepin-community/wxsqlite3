@@ -1,0 +1,8 @@
+config.log
+build
+test.db
+test2.db
+test-backup.db
+wxsqlite3.pc
+docs/html/
+debian/wxsqlite3-3.0.pc

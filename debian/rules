@@ -1,0 +1,58 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+LDFLAGS+=-Wl,--as-needed -lwx_gtk3u_adv-3.0
+export REPACK_SH=$(CURDIR)/debian/repack.sh
+export USE_SOTWOSYMLINKS=1
+UPSTEAM_VERSION=$(shell dpkg-parsechangelog 2>/dev/null | sed -ne 's/Version: \([0-9.]\+\)~.*/\1/p')
+PKGDOCDIR=$(CURDIR)/debian/wxsqlite3-doc/
+
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	ln -s $(CURDIR)/build30 $(CURDIR)/build
+	# no support for --runstatedir per debhelper level 11
+	./configure --prefix=/usr \
+		--libdir=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		--libexecdir=/usr/lib/$(DEB_HOST_MULTIARCH) \
+		--enable-unicode=yes \
+		--with-sqlite3-prefix=/usr
+
+override_dh_auto_build-indep:
+	cd $(CURDIR)/docs/ && doxygen
+
+override_dh_installchangelogs:
+	dh_installchangelogs readme.md
+
+override_dh_auto_install:
+	dh_auto_install
+	sed -e "s/@VERSION@/${UPSTREAM_VERSION}/" \
+	    -e "s#@LIBDIR@#lib/${DEB_HOST_MULTIARCH}#" \
+		debian/wxsqlite3-3.0.pc.in > debian/wxsqlite3-3.0.pc
+	chmod -x debian/wxsqlite3-3.0.pc
+	mkdir -p debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
+	install -m 0644 debian/wxsqlite3-3.0.pc \
+		debian/tmp/usr/lib/$(DEB_HOST_MULTIARCH)/pkgconfig
+
+override_dh_install:
+	dh_install
+ifneq (,$(shell dh_listpackages -i 2>/dev/null))
+	chmod -x $(PKGDOCDIR)/usr/share/doc/wxsqlite3-doc/html/*
+	dh_link -pwxsqlite3-doc /usr/share/javascript/jquery/jquery.js \
+		/usr/share/doc/wxsqlite3-doc/html/jquery.js
+endif
+
+override_dh_auto_test-arch:
+	debian/runtest.sh
+
+get-orig-source:
+	uscan --force-download
+
+.PHONY: override_dh_auto_configure override_dh_auto_build-indep \
+	override_dh_install override_dh_auto_test-arch

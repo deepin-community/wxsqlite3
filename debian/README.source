@@ -1,0 +1,2 @@
+Source is repackaged to remove the included Sqlite3 source under sqlite3/ and
+the minified docs/html/jquery.js replaced with the normal file.

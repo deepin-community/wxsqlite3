@@ -1,0 +1,25 @@
+Description: Make this program non-interactive in order to run it once
+ the build has finished.
+Author: Alessio Treglia <alessio@debian.org>
+Forwarded: not-needed
+---
+ samples/minimal.cpp |    8 --------
+ 1 file changed, 8 deletions(-)
+
+--- wxsqlite3.orig/samples/minimal.cpp
++++ wxsqlite3/samples/minimal.cpp
+@@ -782,14 +782,6 @@ int Minimal::OnRun()
+     cerr << e.GetErrorCode() << ":" << (const char*)(e.GetMessage().mb_str()) << endl;
+   }
+ 
+-  // Loop until user enters q or Q
+-
+-  char c(' ');
+-  while (c != 'q' && c != 'Q')
+-  {
+-    cout << "Press q then enter to quit: ";
+-    cin >> c;
+-  }
+   return 0;
+ }
+ 

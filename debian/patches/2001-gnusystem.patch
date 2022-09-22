@@ -1,0 +1,126 @@
+Description: Make the buildsystem recognize the GNU system.
+Bug-Debian: http://bugs.debian.org/676445
+Author: Barry deFreese <bdfreese@debian.org>
+Forwarded: Ulrich Telle <ulrich.telle@gmx.de>
+---
+ configure |   95 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 94 insertions(+), 1 deletion(-)
+
+--- wxsqlite3.orig/configure
++++ wxsqlite3/configure
+@@ -5473,6 +5473,89 @@ ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
+                 fi
+                 ;;
+ 
++            GNU*)
++                                                if test "$INTELCC" != "yes"; then
++
++
++    ac_ext=c
++ac_cpp='$CPP $CPPFLAGS'
++ac_compile='$CC -c $CFLAGS $CPPFLAGS conftest.$ac_ext >&5'
++ac_link='$CC -o conftest$ac_exeext $CFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
++ac_compiler_gnu=$ac_cv_c_compiler_gnu
++
++    { $as_echo "$as_me:$LINENO: checking whether we are using the Sun C compiler" >&5
++$as_echo_n "checking whether we are using the Sun C compiler... " >&6; }
++if test "${bakefile_cv_c_compiler___SUNPRO_C+set}" = set; then
++  $as_echo_n "(cached) " >&6
++else
++  cat >conftest.$ac_ext <<_ACEOF
++/* confdefs.h.  */
++_ACEOF
++cat confdefs.h >>conftest.$ac_ext
++cat >>conftest.$ac_ext <<_ACEOF
++/* end confdefs.h.  */
++
++int
++main ()
++{
++
++             #ifndef __SUNPRO_C
++                choke me
++             #endif
++
++  ;
++  return 0;
++}
++_ACEOF
++rm -f conftest.$ac_objext
++if { (ac_try="$ac_compile"
++case "(($ac_try" in
++  *\"* | *\`* | *\\*) ac_try_echo=\$ac_try;;
++  *) ac_try_echo=$ac_try;;
++esac
++eval ac_try_echo="\"\$as_me:$LINENO: $ac_try_echo\""
++$as_echo "$ac_try_echo") >&5
++  (eval "$ac_compile") 2>conftest.er1
++  ac_status=$?
++  grep -v '^ *+' conftest.er1 >conftest.err
++  rm -f conftest.er1
++  cat conftest.err >&5
++  $as_echo "$as_me:$LINENO: \$? = $ac_status" >&5
++  (exit $ac_status); } && {
++	 test -z "$ac_c_werror_flag" ||
++	 test ! -s conftest.err
++       } && test -s conftest.$ac_objext; then
++  bakefile_cv_c_compiler___SUNPRO_C=yes
++else
++  $as_echo "$as_me: failed program was:" >&5
++sed 's/^/| /' conftest.$ac_ext >&5
++
++	bakefile_cv_c_compiler___SUNPRO_C=no
++
++fi
++
++rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
++
++
++fi
++{ $as_echo "$as_me:$LINENO: result: $bakefile_cv_c_compiler___SUNPRO_C" >&5
++$as_echo "$bakefile_cv_c_compiler___SUNPRO_C" >&6; }
++    if test "x$bakefile_cv_c_compiler___SUNPRO_C" = "xyes"; then
++        :; SUNCC=yes
++    else
++        :;
++    fi
++    ac_ext=cpp
++ac_cpp='$CXXCPP $CPPFLAGS'
++ac_compile='$CXX -c $CXXFLAGS $CPPFLAGS conftest.$ac_ext >&5'
++ac_link='$CXX -o conftest$ac_exeext $CXXFLAGS $CPPFLAGS $LDFLAGS conftest.$ac_ext $LIBS >&5'
++ac_compiler_gnu=$ac_cv_cxx_compiler_gnu
++
++
++
++                fi
++                ;;
++
+             HP-UX*)
+ 
+ 
+@@ -6444,6 +6526,16 @@ fi
+         fi
+       ;;
+ 
++      *-*-gnu* )
++                        if test "$INTELCC" = "yes" -a "$INTELCC8" != "yes"; then
++            PIC_FLAG="-KPIC"
++        elif test "x$SUNCXX" = "xyes"; then
++            SHARED_LD_CC="${CC} -G -o"
++            SHARED_LD_CXX="${CXX} -G -o"
++            PIC_FLAG="-KPIC"
++        fi
++      ;;
++
+       *-*-solaris2* )
+         if test "x$SUNCXX" = xyes ; then
+             SHARED_LD_CC="${CC} -G -o"
+@@ -7219,7 +7312,7 @@ EOF
+ 
+     case "${BAKEFILE_HOST}" in
+       *-*-linux* | *-*-freebsd* | *-*-openbsd* | *-*-netbsd* | \
+-      *-*-k*bsd*-gnu | *-*-mirbsd* )
++      *-*-k*bsd*-gnu | *-*-mirbsd* | *-*-gnu* )
+         if test "x$SUNCXX" = "xyes"; then
+             SONAME_FLAG="-h "
+         else

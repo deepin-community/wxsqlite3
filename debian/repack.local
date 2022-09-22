@@ -1,0 +1,4 @@
+SUFFIX=~dfsg0
+rm sqlite3/
+rm build/.bakefile_gen.state
+rm docs/html/jquery.js

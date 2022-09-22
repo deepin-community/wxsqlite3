@@ -1,0 +1,71 @@
+Source: wxsqlite3
+Section: libs
+Priority: optional
+Maintainer: Laszlo Boszormenyi (GCS) <gcs@debian.org>
+Build-Depends:
+ debhelper (>= 11),
+ doxygen,
+ libsqlite3-dev (>= 3.15),
+ libwxbase3.0-dev,
+ libwxgtk3.0-gtk3-dev
+Build-Conflicts: libwxbase2.8-dev, libwxgtk3.0-dev
+Standards-Version: 4.4.1
+Homepage: https://utelle.github.io/wxsqlite3/
+#Vcs-Git: git://anonscm.debian.org/collab-maint/wxsqlite3.git
+#Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/wxsqlite3.git
+
+Package: libwxsqlite3-3.0-0
+Architecture: any
+Multi-Arch: same
+Pre-Depends: ${misc:Pre-Depends}
+Breaks: codelite (<= 12.0+dfsg-2~), maitreya (<= 7.0.7-2~)
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends}
+Description: SQLite3 C++ wrapper for use in programs based on the wxWidgets
+ wxSQLite3 is a C++ wrapper around the public domain SQLite 3.x database
+ and is specifically designed for use in programs based on the wxWidgets
+ 3.0 library.
+ .
+ wxSQLite3 does not try to hide the underlying database, in contrary
+ almost all special features of the current SQLite3 version 3.7.4 are
+ supported, like for example the creation of user defined scalar or
+ aggregate functions.
+ .
+ This package provides the shared libraries for use with wxWidgets 3.0 .
+
+Package: libwxsqlite3-3.0-dev
+Architecture: any
+Multi-Arch: same
+Section: libdevel
+#Breaks: libwxsqlite3-2.8-dev (<< 3.0.6.1~dfsg1-2~)
+#Replaces: libwxsqlite3-2.8-dev (<< 3.0.6.1~dfsg1-2~)
+Depends:
+ libsqlite3-dev,
+ libwxbase3.0-dev,
+ libwxgtk3.0-gtk3-dev,
+ libwxsqlite3-3.0-0 (= ${binary:Version}),
+ ${misc:Depends}
+Recommends:
+ pkg-config
+Suggests:
+ wxsqlite3-doc
+Description: Development files for wxSQLite3
+ wxSQLite3 is a C++ wrapper around the public domain SQLite 3.x database
+ and is specifically designed for use in programs based on the wxWidgets
+ 3.0 library.
+ .
+ This package contains the development files for wxSQLite3.
+
+Package: wxsqlite3-doc
+Section: doc
+Architecture: all
+Depends:
+ libjs-jquery (>= 1.7.1), ${misc:Depends}
+Description: Documentation files for wxSQLite3
+ wxSQLite3 is a C++ wrapper around the public domain SQLite 3.x database
+ and is specifically designed for use in programs based on the wxWidgets
+ 3.0 library.
+ .
+ This package contains the documentation files for wxSQLite3, which is
+ also available at <https://utelle.github.io/wxsqlite3/docs/html/>.

@@ -1,0 +1,8 @@
+Document: wxsqlite3-doc
+Title: wxSQLite3 documentation
+Abstract: Developer reference for wxSQLite3.
+Section: Programming
+
+Format: HTML
+Index: /usr/share/doc/wxsqlite3-doc/html/index.html
+Files: /usr/share/doc/wxsqlite3-doc/html/*

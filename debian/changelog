@@ -1,3 +1,9 @@
+wxsqlite3 (3.4.1~dfsg-5deepin0) unstable; urgency=medium
+
+  * No source change upload against GCC 12.
+
+ -- Tianyu Chen <sweetyfish@deepin.org>  Fri, 20 Sep 2024 12:58:18 +0800
+
 wxsqlite3 (3.4.1~dfsg-5) unstable; urgency=medium
 
   * Update dependency of libwxsqlite3-3.0-dev (closes: #933470).
